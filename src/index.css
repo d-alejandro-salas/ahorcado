@@ -1,0 +1,17 @@
+/* scr/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.generalButton {
+  @apply py-2 px-4 text-white rounded m-2;
+}
