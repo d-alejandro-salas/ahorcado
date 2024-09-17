@@ -34,9 +34,11 @@ export const App = () => {
     setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
   };
 
+  const isGameWon = currentWordArray.every(letter => correctGuesses.has(letter));
+
   return (
     <div className="flex flex-col items-center m-12">
-      {(errorCount -1) < images.length ? (
+      {errorCount < images.length && !isGameWon ? (
         <GameOn 
           currentWord={currentWord} 
           currentWordArray={currentWordArray} 
@@ -46,6 +48,11 @@ export const App = () => {
           errorCount={errorCount} 
           images={images} 
         />
+      ) : isGameWon ? (
+        <div>
+          <h1>¡Ganaste!</h1>
+          <p>La respuesta correcta era <strong>{currentWord.palabro}</strong></p>
+        </div>
       ) : (
         // Se pasa la palabra correcta al componente GameOver
         <GameOver word={currentWord.palabro} image={images[5]} />

@@ -30,10 +30,9 @@ export const GameOn = ({
         onClick={handleButtonClick} 
         correctGuesses={correctGuesses} 
         incorrectGuesses={incorrectGuesses} 
-      />
-      
+      />      
       {/* Usar el átomo para mostrar la imagen del ahorcado */}
-      <HangmanImage errorCount={errorCount} images={images} />
+      <HangmanImage errorCount={errorCount + 1} images={images} />
     </>
   );
 };
