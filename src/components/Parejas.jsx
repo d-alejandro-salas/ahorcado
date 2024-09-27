@@ -76,10 +76,10 @@ export const Parejas = () => {
           </div>
         ))}
       <p>Intentos: {intentos}</p>
-      <p>Aciertos: {aciertos / 2}</p>
+      <p>Aciertos: {aciertos}</p>
       <p>Porcentaje: {porcentaje.toFixed(2)}%</p>
       </div>
-      {aciertos > 11 && (
+      {aciertos > 5 && (
   <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-90 p-6">
     <div className="flex flex-col items-center justify-center bg-gray-200 w-80 h-36 rounded-lg">
       <p className="mb-4 text-lg font-bold">¡Has ganado el juego!</p>
