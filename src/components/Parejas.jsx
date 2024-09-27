@@ -55,7 +55,7 @@ export const Parejas = () => {
   };
 
   const intentos = Math.floor(clicks / 2);
-  const porcentaje = intentos > 0 ? ((aciertos / 2) / intentos) * 100 : 0;
+  const porcentaje = intentos > 0 ? ((aciertos) / intentos) * 100 : 0;
 
   return (
     <>
