@@ -3,6 +3,8 @@
 import { useState, useReducer, useMemo } from 'react';
 import { duplicatedCuadros } from '../utils/datos';
 import rey_incognito from '../assets/images/rey_incognito.png';
+import { Card } from './molecules/Card';
+import { WinModal } from './molecules/WinModal';
 
 // Reducer optimizado
 const reducer = (state, action) => {
@@ -15,7 +17,7 @@ const reducer = (state, action) => {
 
 export const Parejas = () => {
   const cuadrosIniciales = useMemo(() => duplicatedCuadros, []);
-  const [cuadrosSeleccionados, dispatch] = useReducer(reducer, cuadrosIniciales);
+  const [cuadrosSeleccionados, despachante] = useReducer(reducer, cuadrosIniciales);
   const [primerClickIndex, setPrimerClickIndex] = useState(null);
   const [clicks, setClicks] = useState(0);
   const [aciertos, setAciertos] = useState(0);
@@ -25,7 +27,7 @@ export const Parejas = () => {
   const handleCardClick = (index) => {
     if (bloquearClicks || cuadrosSeleccionados[index].habilitado) return;
 
-    dispatch({ type: 'SET_HABILITAR', payload: { index, habilitar: true } });
+    despachante({ type: 'SET_HABILITAR', payload: { index, habilitar: true } });
     setClicks((prevClicks) => {
       const newClicks = prevClicks + 1;
 
@@ -41,11 +43,11 @@ export const Parejas = () => {
         } else {
           setBloquearClicks(true);
           setTimeout(() => {
-            dispatch({
+            despachante({
               type: 'SET_HABILITAR',
               payload: { index: primerClickIndex, habilitar: false },
             });
-            dispatch({ type: 'SET_HABILITAR', payload: { index, habilitar: false } });
+            despachante({ type: 'SET_HABILITAR', payload: { index, habilitar: false } });
             setBloquearClicks(false);
           }, 2000);
         }
@@ -55,42 +57,23 @@ export const Parejas = () => {
   };
 
   const intentos = Math.floor(clicks / 2);
-  const porcentaje = intentos > 0 ? ((aciertos) / intentos) * 100 : 0;
+  const porcentaje = intentos > 0 ? ((aciertos / 2) / intentos) * 100 : 0;
 
   return (
     <>
-      <div
-        className="grid grid-cols-6 grid-rows-2 gap-4 m-4"
-          
-      >
+      <div className="grid grid-cols-6 grid-rows-2 gap-4 m-4">
         {cuadrosSeleccionados.map((cuadro, index) => (
-          <div
+          <Card
             key={index}
-            className="border-2 border-orange-500 bg-orange-200 p-2"
-            onClick={() => handleCardClick(index)}>
-            <img
-              src={cuadro.habilitado ? cuadro.url : rey_incognito}
-              alt={cuadro.name}
-              className="object-cover w-full h-full"
-            />
-          </div>
+            cuadro={{ ...cuadro, placeholder: rey_incognito }}
+            onClick={() => handleCardClick(index)}
+          />
         ))}
       <p>Intentos: {intentos}</p>
-      <p>Aciertos: {aciertos}</p>
+      <p>Aciertos: {aciertos / 2}</p>
       <p>Porcentaje: {porcentaje.toFixed(2)}%</p>
       </div>
-      {aciertos > 5 && (
-  <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-90 p-6">
-    <div className="flex flex-col items-center justify-center bg-gray-200 w-80 h-36 rounded-lg">
-      <p className="mb-4 text-lg font-bold">¡Has ganado el juego!</p>
-      <button
-        onClick={() => window.location.reload()}
-        className="bg-orange-500 text-white py-2 px-4 rounded">
-        Volver a jugar
-      </button>
-    </div>
-  </div>
-)}
-    </>
+      {aciertos > 11 && <WinModal onRestart={() => window.location.reload()} />}
+      </>
   );
 };
