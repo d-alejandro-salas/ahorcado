@@ -61,18 +61,18 @@ export const Parejas = () => {
 
   return (
     <>
-      <div className="grid grid-cols-6 grid-rows-2 gap-4 m-4">
-        {cuadrosSeleccionados.map((cuadro, index) => (
-          <Card
-            key={index}
-            cuadro={{ ...cuadro, placeholder: rey_incognito }}
-            onClick={() => handleCardClick(index)}
-          />
-        ))}
-      <p>Intentos: {intentos}</p>
-      <p>Aciertos: {aciertos}</p>
-      <p>Porcentaje: {porcentaje.toFixed(2)}%</p>
-      </div>
+<div className="grid grid-cols-2 gap-4 m-4 md:grid-cols-6">
+  {cuadrosSeleccionados.map((cuadro, index) => (
+    <Card
+      key={index}
+      cuadro={{ ...cuadro, placeholder: rey_incognito }}
+      onClick={() => handleCardClick(index)}
+    />
+  ))}
+  <p>Intentos: {intentos}</p>
+  <p>Aciertos: {aciertos}</p>
+  <p>Porcentaje: {porcentaje.toFixed(2)}%</p>
+</div>
       {aciertos > 5 && <WinModal onRestart={() => window.location.reload()} />}
       </>
   );
