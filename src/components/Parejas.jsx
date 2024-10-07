@@ -70,10 +70,10 @@ export const Parejas = () => {
           />
         ))}
       <p>Intentos: {intentos}</p>
-      <p>Aciertos: {aciertos / 2}</p>
+      <p>Aciertos: {aciertos}</p>
       <p>Porcentaje: {porcentaje.toFixed(2)}%</p>
       </div>
-      {aciertos > 11 && <WinModal onRestart={() => window.location.reload()} />}
+      {aciertos > 5 && <WinModal onRestart={() => window.location.reload()} />}
       </>
   );
 };
